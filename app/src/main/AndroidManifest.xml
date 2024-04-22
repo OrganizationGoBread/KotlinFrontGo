@@ -13,7 +13,7 @@
         android:theme="@style/Theme.KotlinFrontGo"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginComercio"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.KotlinFrontGo">
