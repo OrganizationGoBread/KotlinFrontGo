@@ -2,13 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="CadastroSenhaClientePreview">
-        <State />
-      </entry>
       <entry key="CodigoVerificacaoPreview">
         <State />
       </entry>
-      <entry key="app">
+      <entry key="GreetingPreview">
+        <State />
+      </entry>
+      <entry key="PortalCliente2">
         <State />
       </entry>
     </value>

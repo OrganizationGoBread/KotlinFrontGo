@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitService {
 
-    val BASE_URL_GO_BREAD = "http://localhost:8080/api"
+    val BASE_URL_GO_BREAD = "http://192.168.89.56:8080/api/"
 
     fun getApiCliente(): ApiCliente {
         val cliente =
@@ -44,7 +44,6 @@ object RetrofitService {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(ApiPedido::class.java)
-
         return cliente
     }
     fun getApiProduto(): ApiProduto {

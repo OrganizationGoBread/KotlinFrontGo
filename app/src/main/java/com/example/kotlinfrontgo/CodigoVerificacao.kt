@@ -2,6 +2,7 @@ package com.example.kotlinfrontgo
 
 import android.R
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -26,11 +27,13 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -38,7 +41,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.kotlinfrontgo.api.RetrofitService
 import com.example.kotlinfrontgo.ui.theme.KotlinFrontGoTheme
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.Callback
+import java.util.logging.Logger
+
 
 class CodigoVerificacao : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +69,9 @@ class CodigoVerificacao : ComponentActivity() {
 
 @Composable
 fun CodigoVerificacaoTela(name: String, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
     var entradaNum1 = remember { mutableStateOf("") }
     val entradaNum2 = remember { mutableStateOf("") }
     val entradaNum3 = remember { mutableStateOf("") }
@@ -156,8 +169,34 @@ fun CodigoVerificacaoTela(name: String, modifier: Modifier = Modifier) {
                     Text("Limpar")
                 }
         }
+        Button(
+            onClick = {
+                val apiPedido = RetrofitService.getApiPedido()
+                val codigoVerificacaoString = entradaNum1.value + entradaNum2.value + entradaNum3.value + entradaNum4.value
+                val codigoVerificacao = codigoVerificacaoString.toInt()
+                apiPedido.verifyCode(codigoVerificacao).enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if (response.isSuccessful) {
+                            // Status do pedido atualizado com sucesso
+                            Toast.makeText(context, "Status do pedido atualizado com sucesso", Toast.LENGTH_SHORT).show()
+                        } else {
+                            // Tratar erros
+                            Toast.makeText(context, " ${response.code()} Erro ao atualizar status do pedido", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        // Tratar erros de rede
+                        Toast.makeText(context, "Erro de rede ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+        ) {
+            Text("Atualizar Status do Pedido")
+        }
     }
 }
+
 
 @Preview(showBackground = true, showSystemUi=true)
 @Composable
