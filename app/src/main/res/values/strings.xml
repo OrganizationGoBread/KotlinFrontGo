@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Kotlin Front Go</string>
+    <string name="title_activity_login_cliente">LoginCliente</string>
+    <string name="title_activity_cadastro_dados_cliente">CadastroDadosCliente</string>
+    <string name="title_activity_codigo_verificacao">CodigoVerificacao</string>
+    <string name="title_activity_portal_cliente">PortalCliente</string>
+    <string name="title_activity_pedido_componente">PedidoComponente</string>
+    <string name="title_activity_assinatura">Assinatura</string>
 </resources>

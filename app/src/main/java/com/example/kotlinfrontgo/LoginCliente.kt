@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kotlinfrontgo.ui.theme.KotlinFrontGoTheme
 
-class LoginComercio : ComponentActivity() {
+class LoginCliente : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -43,7 +43,7 @@ class LoginComercio : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginComercioTela("Android")
+                    LoginClienteTela("Android")
                 }
             }
         }
@@ -51,8 +51,7 @@ class LoginComercio : ComponentActivity() {
 }
 
 @Composable
-    fun LoginComercioTela(name: String, modifier: Modifier = Modifier) {
-
+fun LoginClienteTela(name: String, modifier: Modifier = Modifier) {
     val contexto = LocalContext.current
     val entradaLogin = remember { mutableStateOf("") }
     val entradaSenha = remember { mutableStateOf("") }
@@ -94,14 +93,23 @@ class LoginComercio : ComponentActivity() {
                 shape = RoundedCornerShape(10)
             ) { Text("Entrar") }
         }
-        Text(text = texto.value)
+        Row (){
+            Button(
+                onClick = {},
+                modifier = Modifier
+                    .padding(PaddingValues(top = 5.dp))
+                    .fillMaxWidth(0.72f),
+                colors = ButtonDefaults.buttonColors(Color(0xFFEA1D2C)),
+                shape = RoundedCornerShape(10)
+            ) { Text("Cadastrar-se") }
+        }
     }
 }
 
 @Preview(showBackground = true, showSystemUi=true)
 @Composable
-fun LoginComercioPreview() {
+fun LoginClientePreview() {
     KotlinFrontGoTheme {
-        LoginComercioTela("Android")
+        LoginClienteTela("Android")
     }
 }

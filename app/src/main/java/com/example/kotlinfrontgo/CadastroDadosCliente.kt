@@ -1,5 +1,6 @@
 package com.example.kotlinfrontgo
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -31,9 +32,11 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.kotlinfrontgo.ui.theme.KotlinFrontGoTheme
 
-class LoginComercio : ComponentActivity() {
+class CadastroDadosCliente : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -43,7 +46,7 @@ class LoginComercio : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginComercioTela("Android")
+                    CadastroDadosClienteTela(rememberNavController())
                 }
             }
         }
@@ -51,18 +54,16 @@ class LoginComercio : ComponentActivity() {
 }
 
 @Composable
-    fun LoginComercioTela(name: String, modifier: Modifier = Modifier) {
-
+fun CadastroDadosClienteTela(navController: NavHostController, modifier: Modifier = Modifier) {
     val contexto = LocalContext.current
     val entradaLogin = remember { mutableStateOf("") }
     val entradaSenha = remember { mutableStateOf("") }
-    val texto = remember { mutableStateOf("") }
     val passwordVisible by rememberSaveable { mutableStateOf(false) }
     Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
         .fillMaxWidth(1f)
         .padding(top = 30.dp)) {
         Row {
-            Text("Login", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text("Cadastre suas Informações", fontSize = 18.sp, fontWeight = FontWeight.Bold)
         }
 
     }
@@ -72,13 +73,30 @@ class LoginComercio : ComponentActivity() {
         OutlinedTextField(
             value = entradaLogin.value,
             onValueChange = { entradaLogin.value = it },
-            label = { Text("Email") },
+            label = { Text("CPF") },
             placeholder = { Text("") }
         )
         OutlinedTextField(
             value = entradaSenha.value,
             onValueChange = { entradaSenha.value = it },
-            label = { Text("Senha") },
+            label = { Text("Nome") },
+            placeholder = { Text("") },
+            modifier = Modifier
+                .padding(PaddingValues(top = 10.dp)),
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
+        )
+        OutlinedTextField(
+            value = entradaLogin.value,
+            onValueChange = { entradaLogin.value = it },
+            label = { Text("Email") },
+            placeholder = { Text("") },
+            modifier = Modifier
+                .padding(PaddingValues(top = 10.dp))
+        )
+        OutlinedTextField(
+            value = entradaSenha.value,
+            onValueChange = { entradaSenha.value = it },
+            label = { Text("Número (Contato)") },
             placeholder = { Text("") },
             modifier = Modifier
                 .padding(PaddingValues(top = 10.dp)),
@@ -86,22 +104,24 @@ class LoginComercio : ComponentActivity() {
         )
         Row (){
             Button(
-                onClick = {},
+                onClick = {
+                    val cadastroEnderecoCliente = Intent(contexto, CadastroEnderecoCliente::class.java)
+                          contexto.startActivity(cadastroEnderecoCliente)
+                },
                 modifier = Modifier
                     .padding(PaddingValues(top = 10.dp))
                     .fillMaxWidth(0.72f),
                 colors = ButtonDefaults.buttonColors(Color(0xFFEA1D2C)),
                 shape = RoundedCornerShape(10)
-            ) { Text("Entrar") }
+            ) { Text("Próximo") }
         }
-        Text(text = texto.value)
     }
 }
 
 @Preview(showBackground = true, showSystemUi=true)
 @Composable
-fun LoginComercioPreview() {
+fun CadastroDadosClientePreview() {
     KotlinFrontGoTheme {
-        LoginComercioTela("Android")
+        CadastroDadosClienteTela(rememberNavController())
     }
 }

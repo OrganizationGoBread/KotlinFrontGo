@@ -24,7 +24,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -33,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kotlinfrontgo.ui.theme.KotlinFrontGoTheme
 
-class LoginComercio : ComponentActivity() {
+class CadastroSenhaCliente : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -43,7 +42,7 @@ class LoginComercio : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginComercioTela("Android")
+                    CadastroSenhaClienteTela("Android")
                 }
             }
         }
@@ -51,30 +50,21 @@ class LoginComercio : ComponentActivity() {
 }
 
 @Composable
-    fun LoginComercioTela(name: String, modifier: Modifier = Modifier) {
-
-    val contexto = LocalContext.current
-    val entradaLogin = remember { mutableStateOf("") }
+fun CadastroSenhaClienteTela(name: String, modifier: Modifier = Modifier) {
     val entradaSenha = remember { mutableStateOf("") }
-    val texto = remember { mutableStateOf("") }
+    val entradaConfirmarSenha = remember { mutableStateOf("") }
     val passwordVisible by rememberSaveable { mutableStateOf(false) }
     Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
         .fillMaxWidth(1f)
         .padding(top = 30.dp)) {
         Row {
-            Text("Login", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text("Crie sua Senha", fontSize = 18.sp, fontWeight = FontWeight.Bold)
         }
 
     }
     Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
         .fillMaxWidth(1f)
         .padding(top = 80.dp)){
-        OutlinedTextField(
-            value = entradaLogin.value,
-            onValueChange = { entradaLogin.value = it },
-            label = { Text("Email") },
-            placeholder = { Text("") }
-        )
         OutlinedTextField(
             value = entradaSenha.value,
             onValueChange = { entradaSenha.value = it },
@@ -84,24 +74,36 @@ class LoginComercio : ComponentActivity() {
                 .padding(PaddingValues(top = 10.dp)),
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
         )
+        OutlinedTextField(
+            value = entradaConfirmarSenha.value,
+            onValueChange = { entradaConfirmarSenha.value = it },
+            label = { Text("Confirme sua senha") },
+            placeholder = { Text("") },
+            modifier = Modifier
+                .padding(PaddingValues(top = 10.dp)),
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
+        )
         Row (){
             Button(
-                onClick = {},
+                onClick = {
+//                          if(entradaSenha.value.equals(entradaConfirmarSenha.value)) {
+//                              Text(text = "boa")
+//                          }
+                },
                 modifier = Modifier
                     .padding(PaddingValues(top = 10.dp))
                     .fillMaxWidth(0.72f),
                 colors = ButtonDefaults.buttonColors(Color(0xFFEA1D2C)),
                 shape = RoundedCornerShape(10)
-            ) { Text("Entrar") }
+            ) { Text("Cadastrar") }
         }
-        Text(text = texto.value)
     }
 }
 
 @Preview(showBackground = true, showSystemUi=true)
 @Composable
-fun LoginComercioPreview() {
+fun CadastroSenhaClientePreview() {
     KotlinFrontGoTheme {
-        LoginComercioTela("Android")
+        CadastroSenhaClienteTela("Android")
     }
 }
