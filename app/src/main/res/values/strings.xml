@@ -6,4 +6,9 @@
     <string name="title_activity_portal_cliente">PortalCliente</string>
     <string name="title_activity_pedido_componente">PedidoComponente</string>
     <string name="title_activity_assinatura">Assinatura</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_card_padaria">CardPadaria</string>
+    <string name="title_activity_card_produto">CardProduto</string>
+    <string name="title_activity_btn_quantidade">BtnQuantidade</string>
+    <string name="title_activity_users">UsersActivity</string>
 </resources>

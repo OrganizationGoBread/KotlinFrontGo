@@ -6,7 +6,6 @@
 
     <application
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -14,7 +13,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinFrontGo"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".UsersActivity"
+            android:exported="false"
+            android:label="@string/title_activity_users"
+            android:theme="@style/Theme.KotlinFrontGo" />
+        <activity
+            android:name=".component.BtnQuantidade"
+            android:exported="false"
+            android:label="@string/title_activity_btn_quantidade"
+            android:theme="@style/Theme.KotlinFrontGo" />
+        <activity
+            android:name=".component.CardProduto"
+            android:exported="false"
+            android:label="@string/title_activity_card_produto"
+            android:theme="@style/Theme.KotlinFrontGo" />
+        <activity
+            android:name=".component.CardPadaria"
+            android:exported="false"
+            android:label="@string/title_activity_card_padaria"
+            android:theme="@style/Theme.KotlinFrontGo" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:label="@string/title_activity_main"
+            android:theme="@style/Theme.KotlinFrontGo" />
         <activity
             android:name=".Assinatura"
             android:exported="false"
