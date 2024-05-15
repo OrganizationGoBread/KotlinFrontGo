@@ -1,8 +1,11 @@
 package com.example.kotlinfrontgo
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -24,17 +27,30 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.kotlinfrontgo.dto.request.ClienteRequest
 import com.example.kotlinfrontgo.ui.theme.KotlinFrontGoTheme
 
+
 class CadastroSenhaCliente : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val cpf = intent.extras!!.getString("cpf").toString()
+        val nome = intent.extras!!.getString("nome").toString()
+        val email = intent.extras!!.getString("email").toString()
+        val telefone = intent.extras!!.getString("telefone").toString()
+
         setContent {
             KotlinFrontGoTheme {
                 // A surface container using the 'background' color from the theme
@@ -42,7 +58,8 @@ class CadastroSenhaCliente : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    CadastroSenhaClienteTela("Android")
+                    val navController = rememberNavController()
+                    CadastroSenhaClienteTela(cpf, nome, email, telefone)
                 }
             }
         }
@@ -50,9 +67,11 @@ class CadastroSenhaCliente : ComponentActivity() {
 }
 
 @Composable
-fun CadastroSenhaClienteTela(name: String, modifier: Modifier = Modifier) {
-    val entradaSenha = remember { mutableStateOf("") }
-    val entradaConfirmarSenha = remember { mutableStateOf("") }
+fun CadastroSenhaClienteTela(cpf: String, nome: String, email: String, telefone: String, modifier: Modifier = Modifier) {
+    val contexto = LocalContext.current
+    var entradaSenha = remember { mutableStateOf("") }
+    var entradaConfirmarSenha = remember { mutableStateOf("") }
+
     val passwordVisible by rememberSaveable { mutableStateOf(false) }
     Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
         .fillMaxWidth(1f)
@@ -86,16 +105,22 @@ fun CadastroSenhaClienteTela(name: String, modifier: Modifier = Modifier) {
         Row (){
             Button(
                 onClick = {
-//                          if(entradaSenha.value.equals(entradaConfirmarSenha.value)) {
-//                              Text(text = "boa")
-//                          }
+                    val telaCadastroEnderecoCliente = Intent(contexto, CadastroEnderecoCliente::class.java)
+
+                    telaCadastroEnderecoCliente.putExtra("nome", nome)
+                    telaCadastroEnderecoCliente.putExtra("cpf", cpf)
+                    telaCadastroEnderecoCliente.putExtra("email", email)
+                    telaCadastroEnderecoCliente.putExtra("telefone", telefone)
+                    telaCadastroEnderecoCliente.putExtra("senha", entradaConfirmarSenha.value)
+
+                    contexto.startActivity(telaCadastroEnderecoCliente)
                 },
                 modifier = Modifier
                     .padding(PaddingValues(top = 10.dp))
                     .fillMaxWidth(0.72f),
                 colors = ButtonDefaults.buttonColors(Color(0xFFEA1D2C)),
                 shape = RoundedCornerShape(10)
-            ) { Text("Cadastrar") }
+            ) { Text("Próximo") }
         }
     }
 }
@@ -104,6 +129,6 @@ fun CadastroSenhaClienteTela(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun CadastroSenhaClientePreview() {
     KotlinFrontGoTheme {
-        CadastroSenhaClienteTela("Android")
+        CadastroSenhaClienteTela("", "", "", "")
     }
 }

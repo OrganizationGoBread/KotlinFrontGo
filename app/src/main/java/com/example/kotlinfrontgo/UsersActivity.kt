@@ -154,7 +154,7 @@ fun UsersActivity(name: String, modifier: Modifier = Modifier) {
                     val corPersonalizada = Color(android.graphics.Color.parseColor("#383838"))
                     Button(
                         onClick = {
-                            val intent = Intent(context, Signature::class.java)
+                            val intent = Intent(context, LoginCliente::class.java)
                             context.startActivity(intent)
                         },
                         colors = ButtonDefaults.buttonColors(Color(56,56,56)),

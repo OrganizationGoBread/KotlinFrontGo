@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.kotlinfrontgo.dto.request.ClienteRequest
 import com.example.kotlinfrontgo.ui.theme.KotlinFrontGoTheme
 
 class CadastroDadosCliente : ComponentActivity() {
@@ -46,7 +47,7 @@ class CadastroDadosCliente : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    CadastroDadosClienteTela(rememberNavController())
+                    CadastroDadosClienteTela("Android")
                 }
             }
         }
@@ -54,10 +55,12 @@ class CadastroDadosCliente : ComponentActivity() {
 }
 
 @Composable
-fun CadastroDadosClienteTela(navController: NavHostController, modifier: Modifier = Modifier) {
+fun CadastroDadosClienteTela(name: String, modifier: Modifier = Modifier) {
     val contexto = LocalContext.current
-    val entradaLogin = remember { mutableStateOf("") }
-    val entradaSenha = remember { mutableStateOf("") }
+    val entradaCpf = remember { mutableStateOf("") }
+    val entradaNome = remember { mutableStateOf("") }
+    val entradaEmail = remember { mutableStateOf("") }
+    val entradaNumero = remember { mutableStateOf("") }
     val passwordVisible by rememberSaveable { mutableStateOf(false) }
     Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
         .fillMaxWidth(1f)
@@ -71,14 +74,14 @@ fun CadastroDadosClienteTela(navController: NavHostController, modifier: Modifie
         .fillMaxWidth(1f)
         .padding(top = 80.dp)){
         OutlinedTextField(
-            value = entradaLogin.value,
-            onValueChange = { entradaLogin.value = it },
+            value = entradaCpf.value,
+            onValueChange = { entradaCpf.value = it },
             label = { Text("CPF") },
             placeholder = { Text("") }
         )
         OutlinedTextField(
-            value = entradaSenha.value,
-            onValueChange = { entradaSenha.value = it },
+            value = entradaNome.value,
+            onValueChange = { entradaNome.value = it },
             label = { Text("Nome") },
             placeholder = { Text("") },
             modifier = Modifier
@@ -86,16 +89,16 @@ fun CadastroDadosClienteTela(navController: NavHostController, modifier: Modifie
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
         )
         OutlinedTextField(
-            value = entradaLogin.value,
-            onValueChange = { entradaLogin.value = it },
+            value = entradaEmail.value,
+            onValueChange = { entradaEmail.value = it },
             label = { Text("Email") },
             placeholder = { Text("") },
             modifier = Modifier
                 .padding(PaddingValues(top = 10.dp))
         )
         OutlinedTextField(
-            value = entradaSenha.value,
-            onValueChange = { entradaSenha.value = it },
+            value = entradaNumero.value,
+            onValueChange = { entradaNumero.value = it },
             label = { Text("Número (Contato)") },
             placeholder = { Text("") },
             modifier = Modifier
@@ -105,8 +108,14 @@ fun CadastroDadosClienteTela(navController: NavHostController, modifier: Modifie
         Row (){
             Button(
                 onClick = {
-                    val cadastroEnderecoCliente = Intent(contexto, CadastroEnderecoCliente::class.java)
-                          contexto.startActivity(cadastroEnderecoCliente)
+                    val telaCadastroSenhaCliente = Intent(contexto, CadastroSenhaCliente::class.java)
+
+                    telaCadastroSenhaCliente.putExtra("cpf", entradaCpf.value)
+                    telaCadastroSenhaCliente.putExtra("nome", entradaNome.value)
+                    telaCadastroSenhaCliente.putExtra("email", entradaEmail.value)
+                    telaCadastroSenhaCliente.putExtra("telefone", entradaNumero.value)
+
+                    contexto.startActivity(telaCadastroSenhaCliente)
                 },
                 modifier = Modifier
                     .padding(PaddingValues(top = 10.dp))
@@ -114,6 +123,7 @@ fun CadastroDadosClienteTela(navController: NavHostController, modifier: Modifie
                 colors = ButtonDefaults.buttonColors(Color(0xFFEA1D2C)),
                 shape = RoundedCornerShape(10)
             ) { Text("Próximo") }
+
         }
     }
 }
@@ -122,6 +132,6 @@ fun CadastroDadosClienteTela(navController: NavHostController, modifier: Modifie
 @Composable
 fun CadastroDadosClientePreview() {
     KotlinFrontGoTheme {
-        CadastroDadosClienteTela(rememberNavController())
+        CadastroDadosClienteTela("Android")
     }
 }

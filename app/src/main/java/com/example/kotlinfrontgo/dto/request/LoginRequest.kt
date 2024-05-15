@@ -1,4 +1,7 @@
 package com.example.kotlinfrontgo.dto.request
 
-class LoginRequest {
+data class LoginRequest(
+    var email: String? = null,
+    var senha: String? = null
+) {
 }

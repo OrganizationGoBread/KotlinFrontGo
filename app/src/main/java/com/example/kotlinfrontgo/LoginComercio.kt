@@ -86,7 +86,9 @@ class LoginComercio : ComponentActivity() {
         )
         Row (){
             Button(
-                onClick = {},
+                onClick = {
+
+                },
                 modifier = Modifier
                     .padding(PaddingValues(top = 10.dp))
                     .fillMaxWidth(0.72f),
