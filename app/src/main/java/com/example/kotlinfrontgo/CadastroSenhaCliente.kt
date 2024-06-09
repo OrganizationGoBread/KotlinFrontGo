@@ -6,15 +6,23 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -76,7 +84,13 @@ fun CadastroSenhaClienteTela(cpf: String, nome: String, email: String, telefone:
     Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
         .fillMaxWidth(1f)
         .padding(top = 30.dp)) {
-        Row {
+        Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start){
+            Spacer(modifier = modifier.width(20.dp))
+            IconArrowBackCadastro2 {
+                val tela = Intent(contexto, CadastroDadosCliente::class.java)
+                contexto.startActivity(tela)
+            }
+            Spacer(modifier = Modifier.width(125.dp))
             Text("Crie sua Senha", fontSize = 18.sp, fontWeight = FontWeight.Bold)
         }
 
@@ -123,6 +137,17 @@ fun CadastroSenhaClienteTela(cpf: String, nome: String, email: String, telefone:
             ) { Text("Próximo") }
         }
     }
+}
+
+@Composable
+fun IconArrowBackCadastro2(onClick: () -> Unit){
+    Icon(
+        imageVector = Icons.Default.ArrowBack,
+        contentDescription = "Voltar",
+        modifier = Modifier
+            .size(25.dp)
+            .clickable { onClick() }
+    )
 }
 
 @Preview(showBackground = true, showSystemUi=true)

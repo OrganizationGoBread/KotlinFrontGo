@@ -21,6 +21,26 @@
             android:label="@string/title_activity_users"
             android:theme="@style/Theme.KotlinFrontGo" />
         <activity
+            android:name=".Padaria"
+            android:exported="false"
+            android:label="@string/title_activity_users"
+            android:theme="@style/Theme.KotlinFrontGo" />
+        <activity
+            android:name=".CadastroDadosCliente"
+            android:exported="false"
+            android:label="CadastroDadosCliente"
+            android:theme="@style/Theme.KotlinFrontGo" />
+        <activity
+            android:name=".CadastroSenhaCliente"
+            android:exported="false"
+            android:label="CadastroSenhaCliente"
+            android:theme="@style/Theme.KotlinFrontGo" />
+        <activity
+            android:name=".CadastroEnderecoCliente"
+            android:exported="false"
+            android:label="CadastroEnderecoCliente"
+            android:theme="@style/Theme.KotlinFrontGo" />
+        <activity
             android:name=".component.BtnQuantidade"
             android:exported="false"
             android:label="@string/title_activity_btn_quantidade"
@@ -41,7 +61,7 @@
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.KotlinFrontGo" />
         <activity
-            android:name=".Assinatura"
+            android:name=".Signature"
             android:exported="false"
             android:label="@string/title_activity_assinatura"
             android:theme="@style/Theme.KotlinFrontGo" />
@@ -59,11 +79,6 @@
             android:name=".CodigoVerificacao"
             android:exported="false"
             android:label="@string/title_activity_codigo_verificacao"
-            android:theme="@style/Theme.KotlinFrontGo" />
-        <activity
-            android:name=".CadastroEnderecoCliente"
-            android:exported="false"
-            android:label="@string/title_activity_cadastro_dados_cliente"
             android:theme="@style/Theme.KotlinFrontGo" />
         <activity
             android:name=".LoginCliente"

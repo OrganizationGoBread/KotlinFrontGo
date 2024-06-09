@@ -35,6 +35,11 @@ import com.example.kotlinfrontgo.ui.theme.KotlinFrontGoTheme
 class Signature : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val idCliente = intent.extras!!.getInt("idCliente")
+        val idComercio = intent.extras!!.getInt("idComercio")
+
+
         setContent {
             KotlinFrontGoTheme {
                 // A surface container using the 'background' color from the theme
@@ -42,7 +47,7 @@ class Signature : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Assinatura("Android")
+                    Assinatura(idComercio, idCliente)
                 }
             }
         }
@@ -50,7 +55,7 @@ class Signature : ComponentActivity() {
 }
 
 @Composable
-fun Assinatura(name: String, modifier: Modifier = Modifier) {
+fun Assinatura(idComercio: Int, idCliente: Int, modifier: Modifier = Modifier) {
     Surface (
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -66,7 +71,7 @@ fun Assinatura(name: String, modifier: Modifier = Modifier) {
                 contentScale = ContentScale.Fit
             )
             Text(
-                text = "Assinatura"
+                text = "Assinatura idCliente = ${idCliente} and idComercio ${idComercio}"
             )
 
             Icon(painter = painterResource(id = R.drawable.baseline_arrow_forward_ios_24),
@@ -117,6 +122,6 @@ fun Assinatura(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview4() {
     KotlinFrontGoTheme {
-        Assinatura("Android")
+        Assinatura(1, 1)
     }
 }

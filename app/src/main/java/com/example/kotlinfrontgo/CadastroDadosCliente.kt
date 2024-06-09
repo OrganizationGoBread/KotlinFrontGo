@@ -4,15 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -65,7 +73,13 @@ fun CadastroDadosClienteTela(name: String, modifier: Modifier = Modifier) {
     Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
         .fillMaxWidth(1f)
         .padding(top = 30.dp)) {
-        Row {
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
+            Spacer(modifier = Modifier.width(20.dp))
+            IconArrowBackCadastro1 {
+                val tela = Intent(contexto, LoginCliente::class.java)
+                contexto.startActivity(tela)
+            }
+            Spacer(modifier = Modifier.width(125.dp))
             Text("Cadastre suas Informações", fontSize = 18.sp, fontWeight = FontWeight.Bold)
         }
 
@@ -85,8 +99,7 @@ fun CadastroDadosClienteTela(name: String, modifier: Modifier = Modifier) {
             label = { Text("Nome") },
             placeholder = { Text("") },
             modifier = Modifier
-                .padding(PaddingValues(top = 10.dp)),
-            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
+                .padding(PaddingValues(top = 10.dp))
         )
         OutlinedTextField(
             value = entradaEmail.value,
@@ -103,7 +116,6 @@ fun CadastroDadosClienteTela(name: String, modifier: Modifier = Modifier) {
             placeholder = { Text("") },
             modifier = Modifier
                 .padding(PaddingValues(top = 10.dp)),
-            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
         )
         Row (){
             Button(
@@ -126,6 +138,17 @@ fun CadastroDadosClienteTela(name: String, modifier: Modifier = Modifier) {
 
         }
     }
+}
+
+@Composable
+fun IconArrowBackCadastro1(onClick: () -> Unit){
+    Icon(
+        imageVector = Icons.Default.ArrowBack,
+        contentDescription = "Voltar",
+        modifier = Modifier
+            .size(25.dp)
+            .clickable { onClick() }
+    )
 }
 
 @Preview(showBackground = true, showSystemUi=true)

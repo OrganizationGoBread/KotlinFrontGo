@@ -5,15 +5,23 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -76,7 +84,13 @@ fun CadastroEnderecoClienteTela(cpf: String, nome: String, telefone:String, emai
     Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
         .fillMaxWidth(1f)
         .padding(top = 30.dp)) {
-        Row {
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start){
+            Spacer(modifier = Modifier.width(20.dp))
+            IconArrowBackCadastro3 {
+                val tela = Intent(context, CadastroSenhaCliente::class.java)
+                context.startActivity(tela)
+            }
+            Spacer(modifier = Modifier.width(125.dp))
             Text("Cadastre seu Endereço", fontSize = 18.sp, fontWeight = FontWeight.Bold)
         }
 
@@ -118,9 +132,10 @@ fun CadastroEnderecoClienteTela(cpf: String, nome: String, telefone:String, emai
                     api.cadastrarCliente(cliente).enqueue(object : Callback<ClienteResponse> {
                         override fun onResponse(call: Call<ClienteResponse>, response: Response<ClienteResponse>) {
                             if (response.isSuccessful) {
-
+                                val telaLoginCliente = Intent(context, LoginCliente::class.java)
+                                context.startActivity(telaLoginCliente)
                             } else {
-
+                                Toast.makeText(context, "Erro no cadastro", Toast.LENGTH_SHORT).show()
                             }
                         }
                         override fun onFailure(call: Call<ClienteResponse>, t: Throwable) {
@@ -137,6 +152,17 @@ fun CadastroEnderecoClienteTela(cpf: String, nome: String, telefone:String, emai
             ) { Text("Próximo") }
         }
     }
+}
+
+@Composable
+fun IconArrowBackCadastro3(onClick: () -> Unit){
+    Icon(
+        imageVector = Icons.Default.ArrowBack,
+        contentDescription = "Voltar",
+        modifier = Modifier
+            .size(25.dp)
+            .clickable { onClick() }
+    )
 }
 
 @Preview(showBackground = true, showSystemUi=true)

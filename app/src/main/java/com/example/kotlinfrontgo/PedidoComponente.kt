@@ -24,8 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-@Preview
-fun PedidoComponente(){
+fun PedidoComponente(diaEntrega: String, horarioEntrega: String, status: String, codigoVerificacao: Int){
     Box(modifier = Modifier
         .background(Color.White)
         .width(340.dp)
@@ -37,16 +36,23 @@ fun PedidoComponente(){
             .fillMaxHeight(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,) {
-            Box(modifier = Modifier
-                .background(Color.Green)
-                .fillMaxWidth(0.03f)
-                .fillMaxHeight(.8f))
+            if(status == "confirmado"){
+                Box(modifier = Modifier
+                    .background(Color.Green)
+                    .fillMaxWidth(0.03f)
+                    .fillMaxHeight(.8f))
+            } else{
+                Box(modifier = Modifier
+                    .background(Color.Red)
+                    .fillMaxWidth(0.03f)
+                    .fillMaxHeight(.8f))
+            }
             Spacer(modifier = Modifier.width(20.dp))
             Column {
                 Text("Pedido: 1")
-                Text("Segunda-feira")
-                Text("07H30")
-                Text("Codigo: 5687")
+                Text(diaEntrega)
+                Text(horarioEntrega)
+                Text("Codigo: ${codigoVerificacao}")
             }
             Spacer(modifier = Modifier.width(160.dp))
             Text(">", fontSize = 30.sp)

@@ -90,11 +90,11 @@ fun UsersActivity(name: String, modifier: Modifier = Modifier) {
         ) {
             Text(
                 buildAnnotatedString {
-                    withStyle(style = ParagraphStyle(lineHeight = 100.sp)) {
+                    withStyle(style = ParagraphStyle(lineHeight = 80.sp)) {
                         withStyle(
                             style = SpanStyle(
                                 color = Color.Black,
-                                fontSize = 115.sp,
+                                fontSize = 80.sp,
                                 fontWeight = FontWeight.Bold
                             )
                         ) {
@@ -103,7 +103,7 @@ fun UsersActivity(name: String, modifier: Modifier = Modifier) {
                         withStyle(
                             style = SpanStyle(
                                 color = Color.Black,
-                                fontSize = 112.sp,
+                                fontSize = 80.sp,
                                 fontWeight = FontWeight.W300
                             )
                         ) {
@@ -125,7 +125,7 @@ fun UsersActivity(name: String, modifier: Modifier = Modifier) {
                 ) {
                     Button(
                         onClick = {
-                            val intent = Intent(context, LoginComercio::class.java)
+                            val intent = Intent(context, LoginCliente::class.java)
                             context.startActivity(intent)
                         },
                         colors = ButtonDefaults.buttonColors(Color.Black),
@@ -154,7 +154,7 @@ fun UsersActivity(name: String, modifier: Modifier = Modifier) {
                     val corPersonalizada = Color(android.graphics.Color.parseColor("#383838"))
                     Button(
                         onClick = {
-                            val intent = Intent(context, LoginCliente::class.java)
+                            val intent = Intent(context, LoginComercio::class.java)
                             context.startActivity(intent)
                         },
                         colors = ButtonDefaults.buttonColors(Color(56,56,56)),

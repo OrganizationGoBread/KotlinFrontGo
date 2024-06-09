@@ -7,18 +7,25 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -73,12 +80,18 @@ fun LoginClienteTela(name: String, modifier: Modifier = Modifier) {
     val entradaLogin = remember { mutableStateOf("") }
     val entradaSenha = remember { mutableStateOf("") }
     var sucesso by remember { mutableStateOf(0) }
-    val texto = remember { mutableStateOf("") }
+    var idCliente by remember { mutableStateOf(0) }
     val passwordVisible by rememberSaveable { mutableStateOf(false) }
     Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
         .fillMaxWidth(1f)
         .padding(top = 30.dp)) {
-        Row {
+        Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Start) {
+            Spacer(modifier = Modifier.width(20.dp))
+            IconArrowBackLoginCliente {
+                val telaUsersActivity = Intent(context, UsersActivity::class.java)
+                context.startActivity(telaUsersActivity)
+            }
+            Spacer(modifier = Modifier.width(125.dp))
             Text("Login", fontSize = 18.sp, fontWeight = FontWeight.Bold)
         }
 
@@ -102,6 +115,7 @@ fun LoginClienteTela(name: String, modifier: Modifier = Modifier) {
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
         )
         Row (){
+            val context = LocalContext.current
             Button(
                 onClick = {
                     val apiCliente = RetrofitService.getApiCliente()
@@ -109,6 +123,8 @@ fun LoginClienteTela(name: String, modifier: Modifier = Modifier) {
                     apiCliente.loginCliente(login).enqueue(object : Callback<LoginClienteResponse> {
                         override fun onResponse(call: Call<LoginClienteResponse>, response: Response<LoginClienteResponse>) {
                             if (response.isSuccessful) {
+                                val loginResponse = response.body()
+                                idCliente = loginResponse!!.cliente.id
                                 sucesso = 2;
                             } else {
                                 sucesso = 1;
@@ -128,11 +144,11 @@ fun LoginClienteTela(name: String, modifier: Modifier = Modifier) {
             ) { Text("Entrar") }
         }
         Row (){
-            val context = LocalContext.current
+            val contexto = LocalContext.current
             Button(
                 onClick = {
-                          val intent = Intent(context, CadastroDadosCliente::class.java)
-                    context.startActivity(intent)
+                    val intent = Intent(contexto, CadastroDadosCliente::class.java)
+                    contexto.startActivity(intent)
                 },
                 modifier = Modifier
                     .padding(PaddingValues(top = 5.dp))
@@ -145,9 +161,24 @@ fun LoginClienteTela(name: String, modifier: Modifier = Modifier) {
             LoginFailComponent();
         } else if(sucesso == 2){
             LoginSucessComponent();
+            val telaPortalCliente = Intent(context, PortalCliente::class.java)
+            telaPortalCliente.putExtra("idCliente", idCliente)
+            context.startActivity(telaPortalCliente)
         }
     }
 }
+
+@Composable
+fun IconArrowBackLoginCliente(onClick: () -> Unit){
+    Icon(
+        imageVector = Icons.Default.ArrowBack,
+        contentDescription = "Voltar",
+        modifier = Modifier
+            .size(25.dp)
+            .clickable { onClick() }
+    )
+}
+
 
 @Preview(showBackground = true, showSystemUi=true)
 @Composable

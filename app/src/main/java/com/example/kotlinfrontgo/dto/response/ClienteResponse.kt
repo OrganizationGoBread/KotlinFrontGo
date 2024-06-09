@@ -10,4 +10,6 @@ data class ClienteResponse(
     val assinatura: String,
     val endereco: EnderecoResponse,
     val pedidos: List<PedidoClienteResponse>
-)
+){
+    constructor() : this(0, "", "", "", "", "", "", EnderecoResponse(), emptyList())
+}

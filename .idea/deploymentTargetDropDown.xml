@@ -2,10 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="CadastroDadosClientePreview">
+      <entry key="CodigoVerificacaoPreview">
         <State />
       </entry>
-      <entry key="CodigoVerificacaoPreview">
+      <entry key="GreetingPreview2">
+        <State />
+      </entry>
+      <entry key="LoginClientePreview">
+        <State />
+      </entry>
+      <entry key="LoginComercioPreview">
+        <State />
+      </entry>
+      <entry key="PadariaPreview">
         <State>
           <targetSelectedWithDropDown>
             <Target>
@@ -18,16 +27,10 @@
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-05-10T14:12:46.671798200Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-05-31T00:44:17.087104400Z" />
         </State>
       </entry>
-      <entry key="LoginClientePreview">
-        <State />
-      </entry>
       <entry key="app">
-        <State />
-      </entry>
-      <entry key="boxTeste">
         <State />
       </entry>
     </value>

@@ -9,4 +9,6 @@ data class EnderecoResponse (
     val bairro: String,
     val cidade: String,
     val estado: String
-)
+){
+    constructor() : this(0, "", "", 0, null, "", "", "")
+}

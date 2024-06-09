@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -29,8 +33,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,6 +49,7 @@ import com.example.kotlinfrontgo.ui.theme.KotlinFrontGoTheme
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Callback
+
 
 
 class CodigoVerificacao : ComponentActivity() {
@@ -64,7 +73,6 @@ class CodigoVerificacao : ComponentActivity() {
 fun CodigoVerificacaoTela(name: String, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-
     var entradaNum1 = remember { mutableStateOf("") }
     val entradaNum2 = remember { mutableStateOf("") }
     val entradaNum3 = remember { mutableStateOf("") }
@@ -82,86 +90,125 @@ fun CodigoVerificacaoTela(name: String, modifier: Modifier = Modifier) {
     }
 
     Column (verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-        .fillMaxWidth(1f)
-        .padding(top = 30.dp)) {
+
+        .fillMaxWidth(1f)) {
+        Row (modifier = Modifier
+            .fillMaxWidth(1f)
+            .padding(top = 30.dp)){
+            Image(painter = painterResource(id = com.example.kotlinfrontgo.R.drawable.baseline_arrow_forward_ios_24),
+                contentDescription = "Voltar",
+                modifier = Modifier
+                    .fillMaxWidth(0.1f)
+                    .aspectRatio(2f)
+                    .padding(start = 20.dp),
+                contentScale = ContentScale.Fit
+            )
+
+            Text("Verificação", fontSize = 18.sp, fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .padding(start = 110.dp)
+                    .padding(bottom = 50.dp))
+        }
+
+        Row (){
+            Text("Digite o código de\nverificação", fontSize = 40.sp, fontWeight = FontWeight.Bold, lineHeight = 45.sp,
+                modifier = Modifier.fillMaxWidth(0.92f).padding(bottom = 15.dp))
+        }
+
+        Text("Solicite o código ao cliente:", fontSize = 18.sp, color = Color.Gray,
+            modifier = Modifier.fillMaxWidth(0.92f).padding(bottom = 20.dp))
+
         Row (horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth(1f)){
-                OutlinedTextField(
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    value = entradaNum1.value,
-                    onValueChange = {
-                        if (it.length <= maxChar) {
-                            entradaNum1.value = it
+
+            OutlinedTextField(
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                value = entradaNum1.value,
+                onValueChange = {
+                    if (it.length <= maxChar) {
+                        entradaNum1.value = it
+                    }
+                },
+
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(80.dp)
+                    .focusRequester(focusRequester1)
+                    .onGloballyPositioned {
+                        if (entradaNum1.value.length == maxChar) {
+                            focusRequester2.requestFocus()
                         }
                     },
-                    modifier = Modifier
-                        .width(80.dp)
-                        .height(80.dp)
-                        .focusRequester(focusRequester1)
-                        .onGloballyPositioned {
-                            if (entradaNum1.value.length == maxChar) {
-                                focusRequester2.requestFocus()
-                            }
-                        },
-                    singleLine = true,
-                    shape = RoundedCornerShape(15.dp),
-                    textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center, fontSize = 40.sp),
+
+                singleLine = true,
+                shape = RoundedCornerShape(15.dp),
+                textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center, fontSize = 40.sp),
                 )
-                OutlinedTextField(
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    value = entradaNum2.value,
-                    onValueChange = {
-                        if (it.length <= maxChar) entradaNum2.value = it
+
+            OutlinedTextField(
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                value = entradaNum2.value,
+                onValueChange = {
+                    if (it.length <= maxChar) entradaNum2.value = it
+                },
+
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(80.dp)
+                    .focusRequester(focusRequester2)
+                    .onGloballyPositioned {
+                        if (entradaNum2.value.length == maxChar) {
+                            focusRequester3.requestFocus()
+                        }
                     },
-                    modifier = Modifier
-                        .width(80.dp)
-                        .height(80.dp)
-                        .focusRequester(focusRequester2)
-                        .onGloballyPositioned {
-                            if (entradaNum2.value.length == maxChar) {
-                                focusRequester3.requestFocus()
-                            }
-                        },
-                    singleLine = true,
-                    shape = RoundedCornerShape(15.dp),
-                    textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center, fontSize = 40.sp),
+
+                singleLine = true,
+                shape = RoundedCornerShape(15.dp),
+                textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center, fontSize = 40.sp),
                 )
-                OutlinedTextField(
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    value = entradaNum3.value,
-                    onValueChange = {
-                        if (it.length <= maxChar) entradaNum3.value = it
+
+            OutlinedTextField(
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                value = entradaNum3.value,
+                onValueChange = {
+                    if (it.length <= maxChar) entradaNum3.value = it
+                },
+
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(80.dp)
+                    .focusRequester(focusRequester3)
+                    .onGloballyPositioned {
+                        if (entradaNum3.value.length == maxChar) {
+                            focusRequester4.requestFocus()
+                        }
                     },
-                    modifier = Modifier
-                        .width(80.dp)
-                        .height(80.dp)
-                        .focusRequester(focusRequester3)
-                        .onGloballyPositioned {
-                            if (entradaNum3.value.length == maxChar) {
-                                focusRequester4.requestFocus()
-                            }
-                        },
-                    shape = RoundedCornerShape(15.dp),
-                    textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center, fontSize = 40.sp),
+
+                shape = RoundedCornerShape(15.dp),
+                textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center, fontSize = 40.sp),
                 )
-                OutlinedTextField(
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    value = entradaNum4.value,
-                    onValueChange = {
-                        if (it.length <= maxChar) entradaNum4.value = it
-                    },
-                    modifier = Modifier
-                        .width(80.dp)
-                        .height(80.dp)
-                        .focusRequester(focusRequester4),
-                    shape = RoundedCornerShape(15.dp),
-                    textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center, fontSize = 40.sp),
+
+            OutlinedTextField(
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                value = entradaNum4.value,
+                onValueChange = {
+                    if (it.length <= maxChar) entradaNum4.value = it
+                },
+
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(80.dp)
+                    .focusRequester(focusRequester4),
+                shape = RoundedCornerShape(15.dp),
+                textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center, fontSize = 40.sp),
                 )
         }
+
         Button(
             onClick = {
                 val apiPedido = RetrofitService.getApiPedido()
                 val codigoVerificacaoString = entradaNum1.value + entradaNum2.value + entradaNum3.value + entradaNum4.value
                 val codigoVerificacao = codigoVerificacaoString.toInt()
+
                 apiPedido.verifyCode(codigoVerificacao).enqueue(object : Callback<Void> {
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
                         if (response.isSuccessful) {
@@ -173,18 +220,25 @@ fun CodigoVerificacaoTela(name: String, modifier: Modifier = Modifier) {
                         }
                     }
 
+
+
                     override fun onFailure(call: Call<Void>, t: Throwable) {
                         // Tratar erros de rede
                         Toast.makeText(context, "Erro de rede ${t.message}", Toast.LENGTH_SHORT).show()
                     }
                 })
-            }
+            },
+
+            modifier = Modifier
+                .padding(PaddingValues(top = 20.dp))
+                .fillMaxWidth(0.93f),
+            colors = ButtonDefaults.buttonColors(Color.Black),
+            shape = RoundedCornerShape(12)
         ) {
-            Text("Atualizar Status do Pedido")
+            Text("Verificar", fontSize = 20.sp, modifier = Modifier.height(35.dp))
         }
     }
 }
-
 
 @Preview(showBackground = true, showSystemUi=true)
 @Composable
