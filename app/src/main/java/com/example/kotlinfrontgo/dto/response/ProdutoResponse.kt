@@ -4,5 +4,6 @@ data class ProdutoResponse(
     val id: Int,
     val nome: String,
     val valorPorcao: Int,
-    val tipoPorcao: String
+    val tipoPorcao: String,
+    var quantidade: Int = 0
 )

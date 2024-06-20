@@ -11,4 +11,7 @@
     <string name="title_activity_card_produto">CardProduto</string>
     <string name="title_activity_btn_quantidade">BtnQuantidade</string>
     <string name="title_activity_users">UsersActivity</string>
+    <string name="title_activity_horarios">Horarios</string>
+    <string name="title_activity_produtos">Produtos</string>
+    <string name="title_activity_pedido_detalhado_cliente">PedidoDetalhadoCliente</string>
 </resources>

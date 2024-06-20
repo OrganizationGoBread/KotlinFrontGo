@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.kotlinfrontgo.Horarios
 import com.example.kotlinfrontgo.Signature
 import com.example.kotlinfrontgo.TelaPedido
 import com.example.kotlinfrontgo.ui.theme.KotlinFrontGoTheme
@@ -79,9 +80,10 @@ fun CardPadaria(
                 .width(140.dp)
                 .padding(start = 8.dp, bottom = 8.dp)
                 ,onClick = {
-                val tela = Intent(context, Signature::class.java)
+                val tela = Intent(context, Horarios::class.java)
                 tela.putExtra("idCliente", idCliente)
                 tela.putExtra("idComercio", idComercio)
+                tela.putExtra("bairro", bairro)
                 context.startActivity(tela)
             }) {
                 Text(text = "SELECIONAR")

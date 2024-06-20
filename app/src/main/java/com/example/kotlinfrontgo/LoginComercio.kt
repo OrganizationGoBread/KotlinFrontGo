@@ -77,6 +77,7 @@ class LoginComercio : ComponentActivity() {
     val entradaSenha = remember { mutableStateOf("") }
     val texto = remember { mutableStateOf("") }
     var sucesso by remember { mutableStateOf(0) }
+    var idComercio by remember { mutableStateOf(0) }
     val passwordVisible by rememberSaveable { mutableStateOf(false) }
     Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
         .fillMaxWidth(1f)
@@ -118,6 +119,8 @@ class LoginComercio : ComponentActivity() {
                     api.loginComercio(login).enqueue(object : Callback<LoginComercioResponse> {
                         override fun onResponse(call: Call<LoginComercioResponse>, response: Response<LoginComercioResponse>) {
                             if (response.isSuccessful) {
+                                val loginResponse = response.body()
+                                idComercio = loginResponse!!.comercio.id
                                 sucesso = 2;
                             } else {
                                 sucesso = 1;
@@ -141,7 +144,8 @@ class LoginComercio : ComponentActivity() {
             LoginFailComponent();
         } else if(sucesso == 2){
             LoginSucessComponent();
-            val telaPortalComercio = Intent(context, CodigoVerificacao::class.java)
+            val telaPortalComercio = Intent(context, PortalComercio::class.java)
+            telaPortalComercio.putExtra("idComercio", idComercio)
             context.startActivity(telaPortalComercio)
         }
     }

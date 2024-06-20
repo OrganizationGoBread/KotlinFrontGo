@@ -1,5 +1,6 @@
 package com.example.kotlinfrontgo
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -49,12 +50,16 @@ import com.example.kotlinfrontgo.ui.theme.KotlinFrontGoTheme
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Callback
-
+import kotlin.math.absoluteValue
 
 
 class CodigoVerificacao : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val idPedido = intent.extras!!.getInt("idPedido")
+        val idComercio = intent.extras!!.getInt("idComercio")
+
         setContent {
             KotlinFrontGoTheme {
                 // A surface container using the 'background' color from the theme
@@ -62,7 +67,7 @@ class CodigoVerificacao : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    CodigoVerificacaoTela("Android")
+                    CodigoVerificacaoTela(idPedido, idComercio)
                 }
             }
         }
@@ -70,7 +75,7 @@ class CodigoVerificacao : ComponentActivity() {
 }
 
 @Composable
-fun CodigoVerificacaoTela(name: String, modifier: Modifier = Modifier) {
+fun CodigoVerificacaoTela(idPedido: Int, idComercio: Int, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     var entradaNum1 = remember { mutableStateOf("") }
@@ -95,14 +100,11 @@ fun CodigoVerificacaoTela(name: String, modifier: Modifier = Modifier) {
         Row (modifier = Modifier
             .fillMaxWidth(1f)
             .padding(top = 30.dp)){
-            Image(painter = painterResource(id = com.example.kotlinfrontgo.R.drawable.baseline_arrow_forward_ios_24),
-                contentDescription = "Voltar",
-                modifier = Modifier
-                    .fillMaxWidth(0.1f)
-                    .aspectRatio(2f)
-                    .padding(start = 20.dp),
-                contentScale = ContentScale.Fit
-            )
+            IconArrowBack {
+                val telaPortalComercio = Intent(context, PortalComercio::class.java)
+                telaPortalComercio.putExtra("idComercio", idComercio)
+                context.startActivity(telaPortalComercio)
+            }
 
             Text("Verificação", fontSize = 18.sp, fontWeight = FontWeight.Bold,
                 modifier = Modifier
@@ -209,11 +211,14 @@ fun CodigoVerificacaoTela(name: String, modifier: Modifier = Modifier) {
                 val codigoVerificacaoString = entradaNum1.value + entradaNum2.value + entradaNum3.value + entradaNum4.value
                 val codigoVerificacao = codigoVerificacaoString.toInt()
 
-                apiPedido.verifyCode(codigoVerificacao).enqueue(object : Callback<Void> {
+                apiPedido.verifyCode(codigoVerificacao, idPedido).enqueue(object : Callback<Void> {
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
                         if (response.isSuccessful) {
                             // Status do pedido atualizado com sucesso
                             Toast.makeText(context, "Status do pedido atualizado com sucesso", Toast.LENGTH_SHORT).show()
+                            val tela = Intent(context, PortalComercio::class.java)
+                            tela.putExtra("idComercio", idComercio)
+                            context.startActivity(tela)
                         } else {
                             // Tratar erros
                             Toast.makeText(context, " ${response.code()} Erro ao atualizar status do pedido", Toast.LENGTH_SHORT).show()
@@ -244,6 +249,6 @@ fun CodigoVerificacaoTela(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun CodigoVerificacaoPreview() {
     KotlinFrontGoTheme {
-        CodigoVerificacaoTela("Android")
+        CodigoVerificacaoTela(1,1)
     }
 }

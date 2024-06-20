@@ -5,7 +5,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitService {
 
-    val BASE_URL_GO_BREAD = "http://10.18.32.142:8080/api/"
+//    val BASE_URL_GO_BREAD = "https://gobread.zapto.org/api/"
+    val BASE_URL_GO_BREAD = "http://192.168.0.10:8080/api/"
 
     fun getApiCliente(): ApiCliente {
         val cliente =

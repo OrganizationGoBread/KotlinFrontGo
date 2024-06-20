@@ -1,6 +1,7 @@
 package com.example.kotlinfrontgo.dto.response
 
 data class LoginComercioResponse(
-    val token: String
+    val token: String,
+    val comercio: ComercioResponse
 ) {
 }
